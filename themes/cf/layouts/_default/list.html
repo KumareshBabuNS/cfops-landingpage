@@ -1,0 +1,28 @@
+{{ partial "head.html" . }}
+{{ partial "navigation.html" . }}
+<!-- List -->
+<section id="main">
+  <div class="list-container">
+    <div class="row">
+      <div class="col-md-4">
+        <aside class="site">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h2 class="panel-title">Documentation</h2>
+            </div>
+            <div class="list-group">
+              {{ range .Data.Pages.ByTitle }}
+                <a class="list-group-item" href="">{{ .Title }}</a>
+              {{ end }}
+            </div>
+          </div>
+        </aside>
+      </div>
+      <div class="col-md-8">
+        CONTENT
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /List -->
+{{ partial "footer.html" . }}

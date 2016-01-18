@@ -1,0 +1,16 @@
+{{ partial "head.html" . }}
+{{ partial "navigation.html" . }}
+<!-- List -->
+<div class="list-container">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-10">
+        <div>
+          {{ .Content }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /List -->
+{{ partial "footer.html" . }}
