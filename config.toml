@@ -1,4 +1,4 @@
-baseurl = "http://thisneedstobereplaced.tld"
+baseurl = "http://cfops.cfapps.pez.pivotal.io/"
 languageCode = "en-us"
 title = "CFOps"
 theme = "cf"

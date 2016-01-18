@@ -1,0 +1,5 @@
+---
+applications:
+- name: cfops
+  memory: 64M
+  random-route: false
