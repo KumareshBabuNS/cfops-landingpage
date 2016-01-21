@@ -1,6 +1,13 @@
-# CFOPS on vSphere
++++
+title = "AWS"
+description = "CFOps on AWS"
+date = "2016-01-19"
+slug = "AWS"
++++
+
+# CFOPS on AWS
 CFOPS is automation tool to backup and restore Pivotal Cloud Foundry(PCF). Currently CFOPS supports PCF 1.6.
-This Guide will describe step by step directions on running cfops backup tool on vSphere
+This Guide will describe step by step directions on running cfops backup tool on AWS
 
 # Step 1 : Download the CFOPS tool from github
 
@@ -9,7 +16,7 @@ This Guide will describe step by step directions on running cfops backup tool on
 2. Access cfops latest release using following link : https://github.com/pivotalservices/cfops/releases/latest
 3. Download and save the cfops binaries - <code>cfops_binaries.tgz</code>
 
-# Step 2 : Backup Ops Manager on vSphere
+# Step 2 : Backup Ops Manager on AWS
 
 
 CFOps must be installed on your ops manager host as Ops manager host has access to Pivotal Cloud Foundry deployments which includes the elastic runtimes and BOSH.
@@ -46,7 +53,7 @@ OPTIONS:
    --destination, -d 		path of the Cloud Foundry archive [$CFOPS_DEST_PATH]</pre>
 
 5. Backup Ops Manager using <code>cfops backup ></code><pre class='terminal'>
-    $ ../cfops backup --opsmanagerhost x.x.x.x --omp xxx  --du xxx --dp xxx --omu ubuntu -d . -t ops-manager
+    $ ../cfops backup --opsmanagerhost x.x.x.x --omp x  --du xxx --dp xxx --omu ubuntu -d . -t ops-manager
        </pre>
 
 
@@ -62,20 +69,7 @@ total 4890056
 -rw-rw-r-- 1 ubuntu ubuntu     106260 Jan 18 19:38 installation.json
 -rw-rw-r-- 1 ubuntu ubuntu 5007234059 Jan 18 19:45 installation.zip
 
-__Note: __  cfops manager backup command can be run with LOG Level DEBUG mode <pre class='terminal'> 
-$LOG_LEVEL=debug ./cfops backup --opsmanagerhost xx.xx.xx.xx --omp x  --du xxx --dp xxx --omu ubuntu -d . -t ops-manager  
+__Note: __
+1. AWS requires the pem files as authentication mechanisms for ssh into virtual machines. cfops tool will extract the pem file from Ops manager when taking backups from CF virtual machines. Also note that you should provide a dummy password (--omp x )for ops manager host when executing backup command. 2. cfops manager backup command can be run with LOG Level DEBUG mode <pre class='terminal'>
+$LOG_LEVEL=debug ./cfops backup --opsmanagerhost xx.xx.xx.xx --omp x  --du xxx --dp xxx --omu ubuntu -d . -t ops-manager
 </pre>
-
- 
- 
- 
-
-     
-
- 
-
-
- 
-   
-
- 
