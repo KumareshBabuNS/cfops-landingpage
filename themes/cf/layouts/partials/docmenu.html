@@ -3,10 +3,12 @@
     <div class="panel-heading">
       <h2 class="panel-title">Documentation</h2>
     </div>
-    <div class="list-group">
-      {{ range .Data.Pages.ByTitle }}
-        <a class="list-group-item" href="">{{ .Title }}</a>
-      {{ end }}
+    <div>
+      <div class="list-group">
+        {{ range where .Site.Pages "Section" "docs" }}
+          <a class="list-group-item" href="{{ .RelPermalink }}">{{ .Title }}</a>
+        {{ end }}
+      </div>
     </div>
   </div>
 </aside>

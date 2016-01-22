@@ -2,7 +2,6 @@
 title = "vSphere"
 description = "CFOps on vSphere"
 date = "2016-01-19"
-slug = "vSphere"
 +++
 
 # CFOPS on vSphere

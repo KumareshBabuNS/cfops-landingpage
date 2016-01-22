@@ -4,12 +4,13 @@
 <section id="main">
   <div class="list-container">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-2">
         {{ partial "docmenu.html" . }}
       </div>
-      <div class="col-md-8">
-        CONTENT
+      <div class="col-md-8 text-left" style="padding-top: 50px;">
+        {{ .Content }}
       </div>
+      <div class="col-md-2"></div>
     </div>
   </div>
 </section>

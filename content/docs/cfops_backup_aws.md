@@ -2,7 +2,6 @@
 title = "AWS"
 description = "CFOps on AWS"
 date = "2016-01-19"
-slug = "AWS"
 +++
 
 # CFOPS on AWS
