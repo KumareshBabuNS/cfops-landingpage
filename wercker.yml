@@ -17,3 +17,4 @@ deploy:
       cloudfoundry_api_url: https://api.run.pez.pivotal.io
       cloudfoundry_app_name: cfops
       cloudfoundry_use_manifest: true
+      cloudfoundry_domain: cfops.io
