@@ -14,7 +14,7 @@ theme = "cf"
 [[params.actionlink]]
     title = "download"
     icon = "cloud-download"
-    url = "https://github.com/pivotalservices/cfops/releases"
+    url = "/downloads/release"
 
 [[params.social]]
     title = "github"
