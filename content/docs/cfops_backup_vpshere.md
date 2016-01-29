@@ -8,13 +8,14 @@ date = "2016-01-19"
 CFOps is an automation tool to backup and restore Pivotal Cloud Foundry (PCF). Currently CFOPS supports PCF 1.4 and above.
 This guide describes step by step directions on running cfops backup tool on vSphere.
 
-# Step 1 : Download the CFOPS binary
+## Getting started
+CFOps can be installed on your Ops Manager host or a jump host that has access to Ops Manager and PCF deployments.
+
+### Download the CFOPS binary
 
 1. Get the latest release for your OS from the <a class="page-scroll" href="./downloads/release">Downloads</a> page.
 
-# Step 2 : Backup Ops Manager on vSphere
-
-CFOps can be installed on your Ops Manager host or a jump host that has access to Ops Manager and PCF deployments.
+### Backup Ops Manager on vSphere
 
 1. Execute `cfops backup` command with the help option
 ```bash
@@ -52,3 +53,16 @@ deployments.tar.gz  installation.json  installation.zip
 __Note:__  cfops backup command can be run in debug mode by setting LOG_LEVEL=debug <pre class='terminal'>
 ubuntu@ip-10-0-0-154:~$ LOG_LEVEL=debug ./cfops backup --opsmanagerhost xx.xx.xx.xx --omp x --du xxx --dp xxx --omu ubuntu -d . -t ops-manager
 </pre>
+
+### Using S3
+
+You can use an s3 compatible blobstore for backups if you prefer. For example, in order to backup to Amazon S3 or another compatible blobstore you must set the following environment variables:
+```bash
+export S3_ACCESS_KEY_ID="AKY83B2PMWVVY6EF89"
+export S3_SECRET_ACCESS_KEY="PO+DKjfdakDKFDJ/gVDJDIEDKJFE3ZHdL"
+export S3_BUCKET_NAME=pcfbackup
+export S3_ACTIVE=true
+```
+where `S3_ACCESS_KEY_ID` and `S3_SECRET_ACCESS_KEY` are your own AWS credentials and `S3_BUCKET_NAME` is the name of the bucket where you want the backup files stored.
+
+To disable S3 backups, all you need to do is set `S3_ACTIVE=false`
