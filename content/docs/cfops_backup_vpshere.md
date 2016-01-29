@@ -56,7 +56,7 @@ ubuntu@ip-10-0-0-154:~$ LOG_LEVEL=debug ./cfops backup --opsmanagerhost xx.xx.xx
 
 ### Using S3
 
-You can use an s3 compatible blobstore for backups if you prefer. For example, in order to backup to Amazon S3 or another compatible blobstore you must set the following environment variables:
+You can use an s3 compatible blobstore for backups if you prefer. You must set the following environment variables:
 ```bash
 export S3_ACCESS_KEY_ID="AKY83B2PMWVVY6EF89"
 export S3_SECRET_ACCESS_KEY="PO+DKjfdakDKFDJ/gVDJDIEDKJFE3ZHdL"
