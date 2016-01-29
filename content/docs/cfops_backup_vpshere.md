@@ -14,10 +14,10 @@ This guide describes step by step directions on running cfops backup tool on vSp
 
 # Step 2 : Backup Ops Manager on vSphere
 
-
 CFOps can be installed on your Ops Manager host or a jump host that has access to Ops Manager and PCF deployments.
 
-1. Execute `cfops backup` command with the help option <pre class='terminal'>
+1. Execute `cfops backup` command with the help option
+```bash
 $ ubuntu@ip-10-0-0-154:~$ ./cfops backup --help
 NAME:
    cfops backup - creates a backup archive of the target tile
@@ -33,7 +33,7 @@ OPTIONS:
    --opsmanageruser, --omu 	username for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_USER]
    --opsmanagerpass, --omp 	password for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_PASS]
    --destination, -d 		path of the Cloud Foundry archive [$CFOPS_DEST_PATH]
-</pre>
+```
 
 2. Backup Ops Manager using <code>cfops backup</code><pre class='terminal'>
     $ ./cfops backup --opsmanagerhost x.x.x.x --omp xxx  --du xxx --dp xxx --omu ubuntu -d . -t ops-manager
