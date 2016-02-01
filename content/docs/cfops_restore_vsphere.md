@@ -6,7 +6,7 @@ date = "2016-02-01"
 
 # CFOPS on vSphere
 CFOps is an automation tool to backup and restore Pivotal Cloud Foundry (PCF). Currently CFOPS supports PCF 1.4 and above.
-This guide describes step by step directions on running cfops backup tool on vSphere.
+This guide describes step by step directions on running cfops restore tool on vSphere.
 
 ## Getting started
 CFOps can be installed on your Ops Manager host or a jump host that has access to Ops Manager and PCF deployments.
