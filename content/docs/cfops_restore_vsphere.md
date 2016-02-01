@@ -17,7 +17,6 @@ CFOps can be installed on your Ops Manager host or a jump host that has access t
 
 ### Restore Ops Manager on vSphere
 
-
 1. Execute `cfops restore` command with the help option
 ```bash
 ubuntu@pivotal-ops-manager: ./cfops restore --help
