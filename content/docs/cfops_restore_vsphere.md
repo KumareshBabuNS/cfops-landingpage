@@ -18,7 +18,7 @@ CFOps can be installed on your Ops Manager host or a jump host that has access t
 ### Restore Ops Manager on vSphere
 
 
-1. Execute `cfops backup` command with the help option
+1. Execute `cfops restore` command with the help option
 ```bash
 ubuntu@pivotal-ops-manager: ./cfops restore --help
 NAME:
@@ -43,7 +43,7 @@ OPTIONS:
 
 3. Once the restore completes, you can verify it by logging into the OpsManager
 </pre>
-__Note:__  cfops backup command can be run in debug mode by setting LOG_LEVEL=debug <pre class='terminal'>
+__Note:__  cfops restore command can be run in debug mode by setting LOG_LEVEL=debug <pre class='terminal'>
 ubuntu@pivotal-ops-manager: LOG_LEVEL=debug ./cfops restore --opsmanagerhost xx.xx.xx.xx --omp x --du xxx --dp xxx --omu ubuntu -d . -t ops-manager
 </pre>
 
@@ -56,6 +56,6 @@ export S3_SECRET_ACCESS_KEY="PO+DKjfdakDKFDJ/gVDJDIEDKJFE3ZHdL"
 export S3_BUCKET_NAME=pcfbackup
 export S3_ACTIVE=true
 ```
-where `S3_ACCESS_KEY_ID` and `S3_SECRET_ACCESS_KEY` are your own AWS credentials and `S3_BUCKET_NAME` is the name of the bucket where you want the backup files stored.
+where `S3_ACCESS_KEY_ID` and `S3_SECRET_ACCESS_KEY` are your own AWS credentials and `S3_BUCKET_NAME` is the name of the bucket where the restore files are stored.
 
 To disable S3 restore, all you need to do is set `S3_ACTIVE=false`
