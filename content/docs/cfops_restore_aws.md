@@ -42,7 +42,7 @@ OPTIONS:
 </pre>
 
 3. Once the restore completes, you can verify it by logging into the OpsManager
-</pre>
+
 __Note:__  cfops restore command can be run in debug mode by setting LOG_LEVEL=debug <pre class='terminal'>
 ubuntu@pivotal-ops-manager: LOG_LEVEL=debug ./cfops restore --opsmanagerhost xx.xx.xx.xx --du xxx --dp xxx --omu ubuntu -d . -t ops-manager
 </pre>

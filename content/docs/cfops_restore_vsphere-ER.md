@@ -5,7 +5,7 @@ This Guide will describe step by step directions on running cfops restore for El
 # PreRequisite
 Prior to restoring the Elastic Runtime make sure OpsManager has been restored and Apply Changes completed successfully.
 
-__Note: __ This is not a migration tool therefore it will only restore PostGres DB to PostGres DB and MySql to MySql.  Tool is not meant to be used to migrate your DB from PostGres to MySql for newer releases of PCF.
+__Note:__ This is not a migration tool therefore it will only restore PostGres DB to PostGres DB and MySql to MySql.  Tool is not meant to be used to migrate your DB from PostGres to MySql for newer releases of PCF.
 
 # Step 1 : Download the CFOPS tool from github
 
@@ -59,7 +59,7 @@ OPTIONS:
 
 6. Once the restore completes you can try targeting your CLI or logging into the Apps Manager to verify everything is restored./
 
-__Note: __  cfops manager restore command can be run with LOG Level DEBUG mode <pre class='terminal'> 
+__Note:__  cfops manager restore command can be run with LOG Level DEBUG mode <pre class='terminal'> 
 ubuntu@pivotal-ops-manager: ER_VERSION=1.6 LOG_LEVEL=debug ./cfops restore --opsmanagerhost xx.xx.xx.xx --omp x --du xxx --dp xxx --omu ubuntu -d . -t elastic-runtime
 </pre>
 
