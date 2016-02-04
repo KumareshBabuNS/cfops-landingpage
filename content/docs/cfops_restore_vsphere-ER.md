@@ -1,6 +1,12 @@
++++
+title = "ER restore on vSphere"
+description = "CFOps on vSphere"
+date = "2016-02-01"
++++
+
 # CFOPS on vSphere
 CFOPS is automation tool to backup and restore Pivotal Cloud Foundry(PCF). Currently CFOPS supports PCF 1.6.
-This Guide will describe step by step directions on running cfops restore for Elastic Runtime tile on vSphere
+This Guide will describe step by step directions on running cfops restore for Elastic Runtime tile on vSphere.
 
 # PreRequisite
 Prior to restoring the Elastic Runtime make sure OpsManager has been restored and Apply Changes completed successfully.

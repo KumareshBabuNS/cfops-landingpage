@@ -1,5 +1,5 @@
 +++
-title = "vSphere"
+title = "Ops Manager restore on vSphere"
 description = "CFOps on vSphere"
 date = "2016-02-01"
 +++
