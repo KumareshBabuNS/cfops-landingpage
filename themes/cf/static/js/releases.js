@@ -25,20 +25,24 @@ function setDownloadLinksToLatestVersion() {
 
 // Gets all version numbers under the S3 /release/osx folder
 function getReleasedVersionsFromS3Data(xml) {
+  var bucket = $("#bucket").text();
   var files = $.map(xml.find('Contents'), function(item) {
     item = $(item);
     file = item.find('Key').text();
-    reg = /release\/osx\/v(\d+\.\d+\.\d+)/i
-    m = file.match(reg);
-    if (m) {
-      return m[1];
-    }
+	if (file.indexOf(bucket) > -1) {
+		reg = /osx\/v(\d+\.\d+\.\d+)/i
+		m = file.match(reg);
+		if (m) {
+      		return m[1];
+    	}
+	}
   });
   return files;
 }
 
 function downloadUrl(latestVersion, platform) {
-  var url = BUCKET_URL + "/release/" + platform + "/v" + latestVersion + "/cfops"
+  var bucket = $("#bucket").text();
+  var url = BUCKET_URL + "/" + bucket + "/" + platform + "/v" + latestVersion + "/cfops-mysql-plugin"
   if (platform === "win64") {
     url = url + ".exe";
   }

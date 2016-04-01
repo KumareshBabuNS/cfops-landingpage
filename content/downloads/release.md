@@ -2,6 +2,7 @@
 title = "Downloads"
 description = "CFOps downloads"
 date = "2016-01-14"
+bucket = "release"
 +++
 
 # CFOps Downloads
