@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docs on CFOps</title>
+    <link>http://localhost:1313/docs/</link>
+    <description>Recent content in Docs on CFOps</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 02 Feb 2016 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/docs/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>ER backup on vSphere</title>
+      <link>http://localhost:1313/docs/cfops_on_vsphere-ER/</link>
+      <pubDate>Tue, 02 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/docs/cfops_on_vsphere-ER/</guid>
+      <description>
+
+&lt;h1 id=&#34;cfops-on-vsphere:565119ac9c22194d5070cddf53726600&#34;&gt;CFOPS on vSphere&lt;/h1&gt;
+
+&lt;p&gt;CFOPS is automation tool to backup and restore Pivotal Cloud Foundry(PCF). Currently CFOPS supports PCF 1.6.
+This Guide will describe step by step directions on running cfops backup for Elastic Runtime tile on vSphere&lt;/p&gt;
+
+&lt;h1 id=&#34;step-1-download-the-cfops-tool-from-github:565119ac9c22194d5070cddf53726600&#34;&gt;Step 1 : Download the CFOPS tool from github&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Sign into github.com using your github credentials&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Access cfops latest release using following link : &lt;a href=&#34;https://github.com/pivotalservices/cfops/releases/latest&#34;&gt;https://github.com/pivotalservices/cfops/releases/latest&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Download and save the cfops binaries - &lt;code&gt;cfops_binaries.tgz&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&#34;step-2-backup-elastic-runtime-on-vsphere:565119ac9c22194d5070cddf53726600&#34;&gt;Step 2 : Backup Elastic Runtime on vSphere&lt;/h1&gt;
+
+&lt;p&gt;CFOps must be installed on your ops manager host as Ops manager host has access to Pivotal Cloud Foundry deployments which includes the elastic runtimes and BOSH.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Upload &lt;code&gt;cfops_binaries.tgz&lt;/code&gt; to Ops manager host.&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Uncompress &lt;code&gt;cfops_binaries.tgz&lt;/code&gt; into a directory and extract the binary content.&lt;pre class=&#39;terminal&#39;&gt;
+$ uncompress cfops_binaries.tgz
+$tar xvf cfops_binaries.tar
+pipeline/output/builds/
+pipeline/output/builds/osx/
+pipeline/output/builds/osx/cfops
+pipeline/output/builds/win64/
+pipeline/output/builds/win64/cfops.exe
+pipeline/output/builds/linux64/
+pipeline/output/builds/linux64/cfops
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Traverse to &lt;code&gt;pipeline/output/builds/&lt;/code&gt; directory to find your operating system specific directory : For example : linux64 or win64 for cfops linux executable or cfops.exe for win64.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Execute cfops command for verbose help option &lt;pre class=&#39;terminal&#39;&gt;
+$ ubuntu@ip-10-0-0-154:~/cfops/pipeline/output/builds/linux64$ ./cfops backup &amp;ndash;help
+NAME:
+cfops backup - creates a backup archive of the target tile
+USAGE:
+cfops backup [command options] [arguments&amp;hellip;]
+DESCRIPTION:
+backup &amp;ndash;opsmanagerhost &lt;host&gt; &amp;ndash;adminuser &lt;usr&gt; &amp;ndash;adminpass &lt;pass&gt; &amp;ndash;opsmanageruser &lt;opsuser&gt; &amp;ndash;opsmanagerpass &lt;opspass&gt; -d &lt;dir&gt; &amp;ndash;tile elastic-runtime
+OPTIONS:
+&amp;ndash;tile, -t           a tile you would like to run the operation on [$CFOPS_TILE]
+&amp;ndash;opsmanagerhost, &amp;ndash;omh  hostname for Ops Manager [$CFOPS_HOST]
+&amp;ndash;adminuser, &amp;ndash;du        username for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_USER]
+&amp;ndash;adminpass, &amp;ndash;dp        password for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_PASS]
+&amp;ndash;opsmanageruser, &amp;ndash;omu  username for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_USER]
+&amp;ndash;opsmanagerpass, &amp;ndash;omp  password for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_PASS]
+&amp;ndash;destination, -d        path of the Cloud Foundry archive [$CFOPS_DEST_PATH]&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Backup Elastic Runtime tile using &lt;code&gt;cfops backup &amp;gt;&lt;/code&gt;&lt;pre class=&#39;terminal&#39;&gt;
+$ ER_VERSION=1.6  ./cfops backup &amp;ndash;opsmanagerhost x.x.x.x  &amp;ndash;omp xxxx  &amp;ndash;du xxx &amp;ndash;dp xxxx  &amp;ndash;omu ubuntu -d . -t elastic-runtime
+   &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Once the backup completes, you should see &lt;code&gt;Elasticruntime&lt;/code&gt; backup directoy with following files &lt;pre class=&#39;terminal&#39;&gt;  ubuntu@pivotal-ops-manager:~/cfops/pipeline/output/builds/linux64$ ls
+cfops  mysql.backup  nfs_server.backup&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;__Note: __  cfops manager backup command can be run with LOG Level DEBUG mode &lt;pre class=&#39;terminal&#39;&gt;
+ER_VERSION=1.6 LOG_LEVEL=debu ./cfops backup &amp;ndash;opsmanagerhost x.x.x.x  &amp;ndash;omp xxxx  &amp;ndash;du xxx &amp;ndash;dp xxxx  &amp;ndash;omu ubuntu -d . -t elastic-runtime
+&lt;/pre&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ops Manager restore on AWS</title>
+      <link>http://localhost:1313/docs/cfops_restore_aws/</link>
+      <pubDate>Tue, 02 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/docs/cfops_restore_aws/</guid>
+      <description>
+
+&lt;h1 id=&#34;cfops-on-aws:72fbe051191ba8291c99615ceae1bfa6&#34;&gt;CFOPS on AWS&lt;/h1&gt;
+
+&lt;p&gt;CFOps is an automation tool to backup and restore Pivotal Cloud Foundry (PCF). Currently CFOPS supports PCF 1.4 and above.
+This guide describes step by step directions on running cfops restore tool on AWS.&lt;/p&gt;
+
+&lt;h2 id=&#34;getting-started:72fbe051191ba8291c99615ceae1bfa6&#34;&gt;Getting started&lt;/h2&gt;
+
+&lt;p&gt;CFOps can be installed on your Ops Manager host or a jump host that has access to Ops Manager and PCF deployments.&lt;/p&gt;
+
+&lt;h3 id=&#34;download-the-cfops-binary:72fbe051191ba8291c99615ceae1bfa6&#34;&gt;Download the CFOPS binary&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Get the latest release for your OS from the &lt;a class=&#34;page-scroll&#34; href=&#34;./downloads/release&#34;&gt;Downloads&lt;/a&gt; page.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;restore-ops-manager-on-aws:72fbe051191ba8291c99615ceae1bfa6&#34;&gt;Restore Ops Manager on AWS&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Execute &lt;code&gt;cfops restore&lt;/code&gt; command with the help option&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ubuntu@pivotal-ops-manager: ./cfops restore --help
+NAME:
+cfops restore - restores from an archive to the target tile
+USAGE:
+cfops restore [command options] [arguments...]
+DESCRIPTION:
+restore --opsmanagerhost &amp;lt;host&amp;gt; --adminuser &amp;lt;usr&amp;gt; --adminpass &amp;lt;pass&amp;gt; --opsmanageruser &amp;lt;opsuser&amp;gt; --opsmanagerpass &amp;lt;opspass&amp;gt; -d &amp;lt;dir&amp;gt; --tile elastic-runtime
+OPTIONS:
+--destination, -d 		path of the Cloud Foundry archive [$CFOPS_DEST_PATH]
+--tile, -t 				a tile you would like to run the operation on [$CFOPS_TILE]
+--opsmanagerhost, --omh 	hostname for Ops Manager [$CFOPS_HOST]
+--adminuser, --du 		username for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_USER]
+--adminpass, --dp 		password for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_PASS]
+--opsmanageruser, --omu 	username for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_USER]
+--opsmanagerpass, --omp 	password for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_PASS]
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Restore Ops Manager using &lt;code&gt;cfops restore&lt;/code&gt;&lt;pre class=&#39;terminal&#39;&gt;
+$ ./cfops restore &amp;ndash;opsmanagerhost x.x.x.x &amp;ndash;du xxx &amp;ndash;dp xxx &amp;ndash;omu ubuntu -d . -t ops-manager
+&lt;strong&gt;Note:&lt;/strong&gt; OpsManager VM password is not required because it uses the pem file from installation_settings file
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Once the restore completes, you can verify it by logging into the OpsManager&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;  cfops restore command can be run in debug mode by setting LOG_LEVEL=debug &lt;pre class=&#39;terminal&#39;&gt;
+ubuntu@pivotal-ops-manager: LOG_LEVEL=debug ./cfops restore &amp;ndash;opsmanagerhost xx.xx.xx.xx &amp;ndash;du xxx &amp;ndash;dp xxx &amp;ndash;omu ubuntu -d . -t ops-manager
+&lt;/pre&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;using-s3:72fbe051191ba8291c99615ceae1bfa6&#34;&gt;Using S3&lt;/h3&gt;
+
+&lt;p&gt;You can use an s3 compatible blobstore to restore from if you prefer. You must set the following environment variables:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;export S3_ACCESS_KEY_ID=&amp;quot;AKY83B2PMWVVY6EF89&amp;quot;
+export S3_SECRET_ACCESS_KEY=&amp;quot;PO+DKjfdakDKFDJ/gVDJDIEDKJFE3ZHdL&amp;quot;
+export S3_BUCKET_NAME=pcfbackup
+export S3_ACTIVE=true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;where &lt;code&gt;S3_ACCESS_KEY_ID&lt;/code&gt; and &lt;code&gt;S3_SECRET_ACCESS_KEY&lt;/code&gt; are your own AWS credentials and &lt;code&gt;S3_BUCKET_NAME&lt;/code&gt; is the name of the bucket where the restore files are stored.&lt;/p&gt;
+
+&lt;p&gt;To disable S3 restore, all you need to do is set &lt;code&gt;S3_ACTIVE=false&lt;/code&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ER restore on vSphere</title>
+      <link>http://localhost:1313/docs/cfops_restore_vsphere-ER/</link>
+      <pubDate>Mon, 01 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/docs/cfops_restore_vsphere-ER/</guid>
+      <description>
+
+&lt;h1 id=&#34;cfops-on-vsphere:0c959ec450f9dcc745dda5e17490a2c4&#34;&gt;CFOPS on vSphere&lt;/h1&gt;
+
+&lt;p&gt;CFOPS is automation tool to backup and restore Pivotal Cloud Foundry(PCF). Currently CFOPS supports PCF 1.6.
+This Guide will describe step by step directions on running cfops restore for Elastic Runtime tile on vSphere.&lt;/p&gt;
+
+&lt;h1 id=&#34;prerequisite:0c959ec450f9dcc745dda5e17490a2c4&#34;&gt;PreRequisite&lt;/h1&gt;
+
+&lt;p&gt;Prior to restoring the Elastic Runtime make sure OpsManager has been restored and Apply Changes completed successfully.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This is not a migration tool therefore it will only restore PostGres DB to PostGres DB and MySql to MySql.  Tool is not meant to be used to migrate your DB from PostGres to MySql for newer releases of PCF.&lt;/p&gt;
+
+&lt;h1 id=&#34;step-1-download-the-cfops-tool-from-github:0c959ec450f9dcc745dda5e17490a2c4&#34;&gt;Step 1 : Download the CFOPS tool from github&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Sign into github.com using your github credentials&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Access cfops latest release using following link : &lt;a href=&#34;https://github.com/pivotalservices/cfops/releases/latest&#34;&gt;https://github.com/pivotalservices/cfops/releases/latest&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Download and save the cfops binaries - &lt;code&gt;cfops_binaries.tgz&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&#34;step-2-restore-elastic-runtime-on-vsphere:0c959ec450f9dcc745dda5e17490a2c4&#34;&gt;Step 2 : Restore Elastic Runtime on vSphere&lt;/h1&gt;
+
+&lt;p&gt;CFOps must be installed on your ops manager host as Ops manager host has access to Pivotal Cloud Foundry deployments which includes the elastic runtimes and BOSH.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Upload &lt;code&gt;cfops_binaries.tgz&lt;/code&gt; to Ops manager host.&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Uncompress &lt;code&gt;cfops_binaries.tgz&lt;/code&gt; into a directory and extract the binary content.&lt;pre class=&#39;terminal&#39;&gt;
+$ uncompress cfops_binaries.tgz
+$tar xvf cfops_binaries.tar
+pipeline/output/builds/
+pipeline/output/builds/osx/
+pipeline/output/builds/osx/cfops
+pipeline/output/builds/win64/
+pipeline/output/builds/win64/cfops.exe
+pipeline/output/builds/linux64/
+pipeline/output/builds/linux64/cfops
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Traverse to &lt;code&gt;pipeline/output/builds/&lt;/code&gt; directory to find your operating system specific directory : For example : linux64 or win64 for cfops linux executable or cfops.exe for win64.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Execute cfops command for verbose help option &lt;pre class=&#39;terminal&#39;&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ubuntu@pivotal-ops-manager: ./cfops restore --help
+NAME:
+cfops restore - restores from an archive to the target tile
+USAGE:
+cfops restore [command options] [arguments...]
+DESCRIPTION:
+restore --opsmanagerhost &amp;lt;host&amp;gt; --adminuser &amp;lt;usr&amp;gt; --adminpass &amp;lt;pass&amp;gt; --opsmanageruser &amp;lt;opsuser&amp;gt; --opsmanagerpass &amp;lt;opspass&amp;gt; -d &amp;lt;dir&amp;gt; --tile elastic-runtime
+OPTIONS:
+--destination, -d 		path of the Cloud Foundry archive [$CFOPS_DEST_PATH]
+--tile, -t 				a tile you would like to run the operation on [$CFOPS_TILE]
+--opsmanagerhost, --omh 	hostname for Ops Manager [$CFOPS_HOST]
+--adminuser, --du 		username for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_USER]
+--adminpass, --dp 		password for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_PASS]
+--opsmanageruser, --omu 	username for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_USER]
+--opsmanagerpass, --omp 	password for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_PASS]
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Restore Elastic Runtime tile using &lt;code&gt;cfops restore &amp;gt;&lt;/code&gt;&lt;pre class=&#39;terminal&#39;&gt;
+$ ER_VERSION=1.6  ./cfops restore &amp;ndash;opsmanagerhost x.x.x.x  &amp;ndash;omp xxxx  &amp;ndash;du xxx &amp;ndash;dp xxxx  &amp;ndash;omu ubuntu -d . -t elastic-runtime
+   &lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Once the restore completes you can try targeting your CLI or logging into the Apps Manager to verify everything is restored./&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;  cfops manager restore command can be run with LOG Level DEBUG mode &lt;pre class=&#39;terminal&#39;&gt;
+ubuntu@pivotal-ops-manager: ER_VERSION=1.6 LOG_LEVEL=debug ./cfops restore &amp;ndash;opsmanagerhost xx.xx.xx.xx &amp;ndash;omp x &amp;ndash;du xxx &amp;ndash;dp xxx &amp;ndash;omu ubuntu -d . -t elastic-runtime
+&lt;/pre&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ops Manager restore on vSphere</title>
+      <link>http://localhost:1313/docs/cfops_restore_vsphere/</link>
+      <pubDate>Mon, 01 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/docs/cfops_restore_vsphere/</guid>
+      <description>
+
+&lt;h1 id=&#34;cfops-on-vsphere:1808fc592e88b504ffacb3214c81f990&#34;&gt;CFOPS on vSphere&lt;/h1&gt;
+
+&lt;p&gt;CFOps is an automation tool to backup and restore Pivotal Cloud Foundry (PCF). Currently CFOPS supports PCF 1.4 and above.
+This guide describes step by step directions on running cfops restore tool on vSphere.&lt;/p&gt;
+
+&lt;h2 id=&#34;getting-started:1808fc592e88b504ffacb3214c81f990&#34;&gt;Getting started&lt;/h2&gt;
+
+&lt;p&gt;CFOps can be installed on your Ops Manager host or a jump host that has access to Ops Manager and PCF deployments.&lt;/p&gt;
+
+&lt;h3 id=&#34;download-the-cfops-binary:1808fc592e88b504ffacb3214c81f990&#34;&gt;Download the CFOPS binary&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Get the latest release for your OS from the &lt;a class=&#34;page-scroll&#34; href=&#34;./downloads/release&#34;&gt;Downloads&lt;/a&gt; page.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;restore-ops-manager-on-vsphere:1808fc592e88b504ffacb3214c81f990&#34;&gt;Restore Ops Manager on vSphere&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Execute &lt;code&gt;cfops restore&lt;/code&gt; command with the help option&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ubuntu@pivotal-ops-manager: ./cfops restore --help
+NAME:
+cfops restore - restores from an archive to the target tile
+USAGE:
+cfops restore [command options] [arguments...]
+DESCRIPTION:
+restore --opsmanagerhost &amp;lt;host&amp;gt; --adminuser &amp;lt;usr&amp;gt; --adminpass &amp;lt;pass&amp;gt; --opsmanageruser &amp;lt;opsuser&amp;gt; --opsmanagerpass &amp;lt;opspass&amp;gt; -d &amp;lt;dir&amp;gt; --tile elastic-runtime
+OPTIONS:
+--destination, -d 		path of the Cloud Foundry archive [$CFOPS_DEST_PATH]
+--tile, -t 				a tile you would like to run the operation on [$CFOPS_TILE]
+--opsmanagerhost, --omh 	hostname for Ops Manager [$CFOPS_HOST]
+--adminuser, --du 		username for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_USER]
+--adminpass, --dp 		password for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_PASS]
+--opsmanageruser, --omu 	username for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_USER]
+--opsmanagerpass, --omp 	password for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_PASS]
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Restore Ops Manager using &lt;code&gt;cfops restore&lt;/code&gt;&lt;pre class=&#39;terminal&#39;&gt;
+$ ./cfops restore &amp;ndash;opsmanagerhost x.x.x.x &amp;ndash;omp xxx  &amp;ndash;du xxx &amp;ndash;dp xxx &amp;ndash;omu ubuntu -d . -t ops-manager
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Once the restore completes, you can verify it by logging into the OpsManager&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;  cfops restore command can be run in debug mode by setting LOG_LEVEL=debug &lt;pre class=&#39;terminal&#39;&gt;
+ubuntu@pivotal-ops-manager: LOG_LEVEL=debug ./cfops restore &amp;ndash;opsmanagerhost xx.xx.xx.xx &amp;ndash;omp x &amp;ndash;du xxx &amp;ndash;dp xxx &amp;ndash;omu ubuntu -d . -t ops-manager
+&lt;/pre&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;using-s3:1808fc592e88b504ffacb3214c81f990&#34;&gt;Using S3&lt;/h3&gt;
+
+&lt;p&gt;You can use an s3 compatible blobstore to restore from if you prefer. You must set the following environment variables:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;export S3_ACCESS_KEY_ID=&amp;quot;AKY83B2PMWVVY6EF89&amp;quot;
+export S3_SECRET_ACCESS_KEY=&amp;quot;PO+DKjfdakDKFDJ/gVDJDIEDKJFE3ZHdL&amp;quot;
+export S3_BUCKET_NAME=pcfbackup
+export S3_ACTIVE=true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;where &lt;code&gt;S3_ACCESS_KEY_ID&lt;/code&gt; and &lt;code&gt;S3_SECRET_ACCESS_KEY&lt;/code&gt; are your own AWS credentials and &lt;code&gt;S3_BUCKET_NAME&lt;/code&gt; is the name of the bucket where the restore files are stored.&lt;/p&gt;
+
+&lt;p&gt;To disable S3 restore, all you need to do is set &lt;code&gt;S3_ACTIVE=false&lt;/code&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ops Manager backup on AWS</title>
+      <link>http://localhost:1313/docs/cfops_backup_aws/</link>
+      <pubDate>Tue, 19 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/docs/cfops_backup_aws/</guid>
+      <description>
+
+&lt;h1 id=&#34;cfops-on-aws:6fbd33d6513482e618d6bc6ced48b00c&#34;&gt;CFOPS on AWS&lt;/h1&gt;
+
+&lt;p&gt;CFOps is an automation tool to backup and restore Pivotal Cloud Foundry (PCF). Currently CFOPS supports PCF 1.4 and above.
+This guide describes step by step directions on running cfops backup tool on AWS.&lt;/p&gt;
+
+&lt;h2 id=&#34;getting-started:6fbd33d6513482e618d6bc6ced48b00c&#34;&gt;Getting started&lt;/h2&gt;
+
+&lt;p&gt;CFOps can be installed on your Ops Manager host or a jump host that has access to Ops Manager and PCF deployments.&lt;/p&gt;
+
+&lt;h3 id=&#34;download-the-cfops-binary:6fbd33d6513482e618d6bc6ced48b00c&#34;&gt;Download the CFOPS binary&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Get the latest release for your OS from the &lt;a class=&#34;page-scroll&#34; href=&#34;./downloads/release&#34;&gt;Downloads&lt;/a&gt; page.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;backup-ops-manager-on-aws:6fbd33d6513482e618d6bc6ced48b00c&#34;&gt;Backup Ops Manager on AWS&lt;/h3&gt;
+
+&lt;p&gt;AWS requires the pem files as authentication mechanisms for ssh into virtual machines. The &lt;code&gt;cfops&lt;/code&gt; tool will extract the pem file from Ops manager when taking backups from CF virtual machines. You should provide a dummy password (–omp x) for ops manager host when executing backup command.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Execute &lt;code&gt;cfops backup&lt;/code&gt; command with the help option&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ ubuntu@ip-10-0-0-154:~$ ./cfops backup --help
+NAME:
+cfops backup - creates a backup archive of the target tile
+USAGE:
+cfops backup [command options] [arguments...]
+DESCRIPTION:
+backup --opsmanagerhost &amp;lt;host&amp;gt; --adminuser &amp;lt;usr&amp;gt; --adminpass &amp;lt;pass&amp;gt; --opsmanageruser &amp;lt;opsuser&amp;gt; --opsmanagerpass &amp;lt;opspass&amp;gt; -d &amp;lt;dir&amp;gt; --tile elastic-runtime
+OPTIONS:
+--tile, -t 			a tile you would like to run the operation on [$CFOPS_TILE]
+--opsmanagerhost, --omh 	hostname for Ops Manager [$CFOPS_HOST]
+--adminuser, --du 		username for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_USER]
+--adminpass, --dp 		password for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_PASS]
+--opsmanageruser, --omu 	username for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_USER]
+--opsmanagerpass, --omp 	password for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_PASS]
+--destination, -d 		path of the Cloud Foundry archive [$CFOPS_DEST_PATH]
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Backup Ops Manager using &lt;code&gt;cfops backup&lt;/code&gt;&lt;pre class=&#39;terminal&#39;&gt;
+$ ./cfops backup &amp;ndash;opsmanagerhost x.x.x.x &amp;ndash;omp xxx  &amp;ndash;du xxx &amp;ndash;dp xxx &amp;ndash;omu ubuntu -d . -t ops-manager
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Once the backup completes, you should see &lt;code&gt;opsmanager&lt;/code&gt; backup directory with following files &lt;pre class=&#39;terminal&#39;&gt;
+ubuntu@ip-10-0-0-154:~$ ls -l
+total 11068
+-rwxr-xr-x 1 ubuntu ubuntu 11327680 Jan 18 15:11 cfops
+drwxrwxr-x 2 ubuntu ubuntu     4096 Jan 18 19:38 opsmanager
+ubuntu@ip-10-0-0-154:~$
+ubuntu@ip-10-0-0-154:~$ cd opsmanager/
+ubuntu@ip-10-0-0-154:~/opsmanager$ ls
+deployments.tar.gz  installation.json  installation.zip
+&lt;/pre&gt;
+&lt;strong&gt;Note:&lt;/strong&gt;  cfops backup command can be run in debug mode by setting LOG_LEVEL=debug &lt;pre class=&#39;terminal&#39;&gt;
+ubuntu@ip-10-0-0-154:~$ LOG_LEVEL=debug ./cfops backup &amp;ndash;opsmanagerhost xx.xx.xx.xx &amp;ndash;omp x &amp;ndash;du xxx &amp;ndash;dp xxx &amp;ndash;omu ubuntu -d . -t ops-manager
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;using-s3:6fbd33d6513482e618d6bc6ced48b00c&#34;&gt;Using S3&lt;/h3&gt;
+
+&lt;p&gt;You can use an s3 compatible blobstore for backups if you prefer. You must set the following environment variables:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;export S3_ACCESS_KEY_ID=&amp;quot;AKY83B2PMWVVY6EF89&amp;quot;
+export S3_SECRET_ACCESS_KEY=&amp;quot;PO+DKjfdakDKFDJ/gVDJDIEDKJFE3ZHdL&amp;quot;
+export S3_BUCKET_NAME=pcfbackup
+export S3_ACTIVE=true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;where &lt;code&gt;S3_ACCESS_KEY_ID&lt;/code&gt; and &lt;code&gt;S3_SECRET_ACCESS_KEY&lt;/code&gt; are your own AWS credentials and &lt;code&gt;S3_BUCKET_NAME&lt;/code&gt; is the name of the bucket where you want the backup files stored.
+To disable S3 backups, all you need to do is set &lt;code&gt;S3_ACTIVE=false&lt;/code&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ops Manager backup on vSphere</title>
+      <link>http://localhost:1313/docs/cfops_backup_vpshere/</link>
+      <pubDate>Tue, 19 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/docs/cfops_backup_vpshere/</guid>
+      <description>
+
+&lt;h1 id=&#34;cfops-on-vsphere:29a52fac1756e68170fa216fed93f435&#34;&gt;CFOPS on vSphere&lt;/h1&gt;
+
+&lt;p&gt;CFOps is an automation tool to backup and restore Pivotal Cloud Foundry (PCF). Currently CFOPS supports PCF 1.4 and above.
+This guide describes step by step directions on running cfops backup tool on vSphere.&lt;/p&gt;
+
+&lt;h2 id=&#34;getting-started:29a52fac1756e68170fa216fed93f435&#34;&gt;Getting started&lt;/h2&gt;
+
+&lt;p&gt;CFOps can be installed on your Ops Manager host or a jump host that has access to Ops Manager and PCF deployments.&lt;/p&gt;
+
+&lt;h3 id=&#34;download-the-cfops-binary:29a52fac1756e68170fa216fed93f435&#34;&gt;Download the CFOPS binary&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Get the latest release for your OS from the &lt;a class=&#34;page-scroll&#34; href=&#34;./downloads/release&#34;&gt;Downloads&lt;/a&gt; page.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;backup-ops-manager-on-vsphere:29a52fac1756e68170fa216fed93f435&#34;&gt;Backup Ops Manager on vSphere&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Execute &lt;code&gt;cfops backup&lt;/code&gt; command with the help option&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ ubuntu@ip-10-0-0-154:~$ ./cfops backup --help
+NAME:
+cfops backup - creates a backup archive of the target tile
+USAGE:
+cfops backup [command options] [arguments...]
+DESCRIPTION:
+backup --opsmanagerhost &amp;lt;host&amp;gt; --adminuser &amp;lt;usr&amp;gt; --adminpass &amp;lt;pass&amp;gt; --opsmanageruser &amp;lt;opsuser&amp;gt; --opsmanagerpass &amp;lt;opspass&amp;gt; -d &amp;lt;dir&amp;gt; --tile elastic-runtime
+OPTIONS:
+--tile, -t 			a tile you would like to run the operation on [$CFOPS_TILE]
+--opsmanagerhost, --omh 	hostname for Ops Manager [$CFOPS_HOST]
+--adminuser, --du 		username for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_USER]
+--adminpass, --dp 		password for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_PASS]
+--opsmanageruser, --omu 	username for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_USER]
+--opsmanagerpass, --omp 	password for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_PASS]
+--destination, -d 		path of the Cloud Foundry archive [$CFOPS_DEST_PATH]
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Backup Ops Manager using &lt;code&gt;cfops backup&lt;/code&gt;&lt;pre class=&#39;terminal&#39;&gt;
+$ ./cfops backup &amp;ndash;opsmanagerhost x.x.x.x &amp;ndash;omp xxx  &amp;ndash;du xxx &amp;ndash;dp xxx &amp;ndash;omu ubuntu -d . -t ops-manager
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Once the backup completes, you should see &lt;code&gt;opsmanager&lt;/code&gt; backup directory with following files &lt;pre class=&#39;terminal&#39;&gt;
+ubuntu@ip-10-0-0-154:~$ ls -l
+total 11068
+-rwxr-xr-x 1 ubuntu ubuntu 11327680 Jan 18 15:11 cfops
+drwxrwxr-x 2 ubuntu ubuntu     4096 Jan 18 19:38 opsmanager
+ubuntu@ip-10-0-0-154:~$
+ubuntu@ip-10-0-0-154:~$ cd opsmanager/
+ubuntu@ip-10-0-0-154:~/opsmanager$ ls
+deployments.tar.gz  installation.json  installation.zip
+&lt;/pre&gt;
+&lt;strong&gt;Note:&lt;/strong&gt;  cfops backup command can be run in debug mode by setting LOG_LEVEL=debug &lt;pre class=&#39;terminal&#39;&gt;
+ubuntu@ip-10-0-0-154:~$ LOG_LEVEL=debug ./cfops backup &amp;ndash;opsmanagerhost xx.xx.xx.xx &amp;ndash;omp x &amp;ndash;du xxx &amp;ndash;dp xxx &amp;ndash;omu ubuntu -d . -t ops-manager
+&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;using-s3:29a52fac1756e68170fa216fed93f435&#34;&gt;Using S3&lt;/h3&gt;
+
+&lt;p&gt;You can use an s3 compatible blobstore for backups if you prefer. You must set the following environment variables:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;export S3_ACCESS_KEY_ID=&amp;quot;AKY83B2PMWVVY6EF89&amp;quot;
+export S3_SECRET_ACCESS_KEY=&amp;quot;PO+DKjfdakDKFDJ/gVDJDIEDKJFE3ZHdL&amp;quot;
+export S3_BUCKET_NAME=pcfbackup
+export S3_ACTIVE=true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;where &lt;code&gt;S3_ACCESS_KEY_ID&lt;/code&gt; and &lt;code&gt;S3_SECRET_ACCESS_KEY&lt;/code&gt; are your own AWS credentials and &lt;code&gt;S3_BUCKET_NAME&lt;/code&gt; is the name of the bucket where you want the backup files stored.&lt;/p&gt;
+
+&lt;p&gt;To disable S3 backups, all you need to do is set &lt;code&gt;S3_ACTIVE=false&lt;/code&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Plugin Installation</title>
+      <link>http://localhost:1313/docs/cfops_plugin/</link>
+      <pubDate>Tue, 19 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/docs/cfops_plugin/</guid>
+      <description>
+
+&lt;h2 id=&#34;getting-started:4e3db165595a15e5a6eb6534a08a4a55&#34;&gt;Getting started&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;To install plugins create a plugins directory adjacent to where you have placed cfops&lt;/li&gt;
+&lt;li&gt;Download plugin(s) using plugin dropdown menu and place in plugins directory&lt;/li&gt;
+&lt;li&gt;Ensure files are executable &lt;pre class=&#39;terminal&#39;&gt;
+chmod -R +x plugins/
+&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;List tiles to see plugins and standard elastic-runtime, ops-manager options &lt;pre class=&#39;terminal&#39;&gt;
+./cfops list-tiles&lt;br /&gt;
+&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
