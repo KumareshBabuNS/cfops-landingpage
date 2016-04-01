@@ -1,4 +1,0 @@
-rm -rf dev
-rm -rf public
-hugo -Ds '' -t cf
-

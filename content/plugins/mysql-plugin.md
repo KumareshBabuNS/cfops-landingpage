@@ -3,6 +3,7 @@ title = "Downloads"
 description = "MySql Plugin downloads"
 date = "2016-01-14"
 bucket = "mysql-plugin-release"
+file = "cfops-mysql-plugin"
 +++
 
 # Setup

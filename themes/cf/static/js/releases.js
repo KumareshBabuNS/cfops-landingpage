@@ -42,7 +42,8 @@ function getReleasedVersionsFromS3Data(xml) {
 
 function downloadUrl(latestVersion, platform) {
   var bucket = $("#bucket").text();
-  var url = BUCKET_URL + "/" + bucket + "/" + platform + "/v" + latestVersion + "/cfops-mysql-plugin"
+  var fileName = $("#fileName").text();
+  var url = BUCKET_URL + "/" + bucket + "/" + platform + "/v" + latestVersion + "/" + fileName
   if (platform === "win64") {
     url = url + ".exe";
   }
