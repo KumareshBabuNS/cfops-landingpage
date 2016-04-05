@@ -1,10 +1,11 @@
-box: debian:7.10
+box: debian
 build:
   steps:
     # Use off the shelf hugo build step
     # https://app.wercker.com/#applications/54a7744c6b3ba8733de4dcde/tab/details
     - arjen/hugo-build:
       version: "0.15"
+
 deploy:
   steps:
     - wercker/install-packages:
