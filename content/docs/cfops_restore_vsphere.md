@@ -34,6 +34,9 @@ OPTIONS:
    --adminpass, --dp 		password for Ops Mgr admin (Ops Manager WebConsole Credentials) [$CFOPS_ADMIN_PASS]
    --opsmanageruser, --omu 	username for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_USER]
    --opsmanagerpass, --omp 	password for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_PASS]
+   --encryptionkey, -k 		encryption key to encrypt/decrypt your archive (key lengths supported are 16, 24, 32 for AES-128, AES-192, or                            AES-256) [$CFOPS_ENCRYPTION_KEY]
+   --clear-bosh-manifest 	set this flag if you would like to clear the bosh-deployments.yml (this should only affect a restore of                                   Ops-Manager) [$CFOPS_CLEAR_BOSH_MANIFEST]
+   --pluginargs, -p 		Arguments for plugin to execute [$CFOPS_PLUGIN_ARGS]
 ```
 
 2. Restore Ops Manager using <code>cfops restore</code><pre class='terminal'>
