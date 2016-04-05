@@ -1,4 +1,4 @@
-box: debian:8
+box: debian:latest
 build:
   steps:
     # Use off the shelf hugo build step
