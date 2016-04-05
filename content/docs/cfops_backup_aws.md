@@ -16,7 +16,7 @@ CFOps can be installed on your Ops Manager host or a jump host that has access t
 1. Get the latest release for your OS from the <a class="page-scroll" href="./downloads/release">Downloads</a> page.
 
 ### Backup Ops Manager on AWS
-AWS requires the pem files as authentication mechanisms for ssh into virtual machines. The `cfops` tool will extract the pem file from Ops manager when taking backups from CF virtual machines. You should provide a dummy password (–omp x) for ops manager host when executing backup command.
+AWS requires the pem files as authentication mechanisms for ssh into virtual machines. The `cfops` tool will extract the pem file from Ops manager when taking backups from CF virtual machines.
 
 1. Execute `cfops backup` command with the help option
 ```bash
@@ -26,7 +26,7 @@ NAME:
 USAGE:
    cfops backup [command options] [arguments...]
 DESCRIPTION:
-   backup --opsmanagerhost <host> --adminuser <usr> --adminpass <pass> --opsmanageruser <opsuser> --opsmanagerpass <opspass> -d <dir> --tile elastic-runtime
+   backup --opsmanagerhost <host> --adminuser <usr> --adminpass <pass> --opsmanageruser <opsuser>  -d <dir> --tile elastic-runtime
 OPTIONS:
    --tile, -t 			a tile you would like to run the operation on [$CFOPS_TILE]
    --opsmanagerhost, --omh 	hostname for Ops Manager [$CFOPS_HOST]
@@ -35,10 +35,13 @@ OPTIONS:
    --opsmanageruser, --omu 	username for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_USER]
    --opsmanagerpass, --omp 	password for Ops Manager VM Access (used for ssh connections) [$CFOPS_OM_PASS]
    --destination, -d 		path of the Cloud Foundry archive [$CFOPS_DEST_PATH]
+   --encryptionkey, -k 		encryption key to encrypt/decrypt your archive (key lengths supported are 16, 24, 32 for AES-128, AES-192, or                            AES-256) [$CFOPS_ENCRYPTION_KEY]
+   --clear-bosh-manifest 	set this flag if you would like to clear the bosh-deployments.yml (this should only affect a restore of                                   Ops-Manager) [$CFOPS_CLEAR_BOSH_MANIFEST]
+   --pluginargs, -p 		Arguments for plugin to execute [$CFOPS_PLUGIN_ARGS]
 ```
 
 2. Backup Ops Manager using <code>cfops backup</code><pre class='terminal'>
-    $ ./cfops backup --opsmanagerhost x.x.x.x --omp xxx  --du xxx --dp xxx --omu ubuntu -d . -t ops-manager
+    $ ./cfops backup --opsmanagerhost x.x.x.x  --du xxx --dp xxx --omu ubuntu -d . -t ops-manager
 </pre>
 
 3. Once the backup completes, you should see <code>opsmanager</code> backup directory with following files <pre class='terminal'>
