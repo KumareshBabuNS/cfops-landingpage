@@ -14,7 +14,7 @@ Validate installed correctly by executing <pre class="terminal">
 </pre>
 Should output redis-tile as one of tiles
 
-# MySql Plugin Downloads
+# Redis Plugin Downloads
 
 Below are the available downloads for the latest version of redis plugin for cfops. Please
 download the proper package for your operating system. You can also download
