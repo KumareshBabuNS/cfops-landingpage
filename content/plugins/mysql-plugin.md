@@ -18,5 +18,5 @@ Should output mysql-tile as one of tiles
 
 Below are the available downloads for the latest version of mysql plugin for cfops. Please
 download the proper package for your operating system. You can also download
-older versions of cfops from the
+older versions of mysql from the
 [GitHub releases page](https://github.com/pivotalservices/cfops-mysql-plugin/releases).
