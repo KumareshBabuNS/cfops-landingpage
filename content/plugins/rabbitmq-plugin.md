@@ -12,11 +12,11 @@ Install following steps on plugin [documentation page] (docs/cfops_plugin/)
 Validate installed correctly by executing <pre class="terminal">
 ./cfops list-tiles
 </pre>
-Should output rabbitmq-tile as one of tiles
+Should output **rabbitmq** as one of tiles
 
 # RabbitMQ Plugin Downloads
 
-Below are the available downloads for the latest version of rabbitmq plugin for cfops. Please
+Below are the available downloads for the latest version of the **rabbitmq** plugin for cfops. Please
 download the proper package for your operating system. You can also download
-older versions of rabbitmq from the
+older versions of the plugin from the
 [GitHub releases page](https://github.com/pivotalservices/cfops-rabbitmq-plugin/releases).
