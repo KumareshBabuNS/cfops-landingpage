@@ -66,6 +66,7 @@ export S3_ACCESS_KEY_ID="AKY83B2PMWVVY6EF89"
 export S3_SECRET_ACCESS_KEY="PO+DKjfdakDKFDJ/gVDJDIEDKJFE3ZHdL"
 export S3_BUCKET_NAME=pcfbackup
 export S3_ACTIVE=true
+export S3_DOMAIN=<some_compatible_s3_store_url>
 ```
-where `S3_ACCESS_KEY_ID` and `S3_SECRET_ACCESS_KEY` are your own AWS credentials and `S3_BUCKET_NAME` is the name of the bucket where you want the backup files stored.
+where `S3_ACCESS_KEY_ID` and `S3_SECRET_ACCESS_KEY` are your own AWS credentials and `S3_BUCKET_NAME` is the name of the bucket where you want the backup files stored. `S3_DOMAIN` is optional
 To disable S3 backups, all you need to do is set `S3_ACTIVE=false`
