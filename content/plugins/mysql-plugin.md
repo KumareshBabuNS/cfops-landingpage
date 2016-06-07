@@ -14,6 +14,19 @@ Validate installed correctly by executing <pre class="terminal">
 </pre>
 Should output mysql-tile as one of tiles
 
+# Backup
+
+To run a backup execute the following command <pre class="terminal">
+./cfops backup --opsmanagerhost x.x.x.x --omp xxx  --du xxx --dp xxx --omu ubuntu -d . -t mysql-tile
+</pre>
+This will output a dmp file in the target directory
+
+# Restore
+To run a restore execute the following command <pre class="terminal">
+./cfops restore --opsmanagerhost x.x.x.x --omp xxx  --du xxx --dp xxx --omu ubuntu -d . -t mysql-tile
+</pre>
+This will take the mysql dump in the target directory and restore
+
 # MySql Plugin Downloads
 
 Below are the available downloads for the latest version of mysql plugin for cfops. Please
